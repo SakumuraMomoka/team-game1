@@ -13,4 +13,6 @@ public class WeaponDate:ScriptableObject
     public int tamaType;//弾の種類
     public float knockbackValue;//敵がノックバックする値
     public float attenuationValue;//距離減衰
+
+    public GameObject tamaPrefab;
 }

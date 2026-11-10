@@ -6,23 +6,18 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
     [Header("パラメーター")]
-    [Header("Move")]
     public float moveSpeed;
-    [Header("Shoot")]
-    [SerializeField] private float shootInterval;//連射速度を変えるなら、ここをいじる
-    private float shootTimer;
-    [SerializeField] private Transform shootPoint;
     private Vector2 playerDirection;
 
     [Header("参照")]
-    private PlayerInput input;
+    private Input input;
     private Rigidbody2D rb;
     [SerializeField] private GameObject tamaPrefab;
     private Camera mainCamera;
 
     private void Awake()
     {
-        input = GetComponent<PlayerInput>();
+        input = GetComponent<Input>();
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
     }
@@ -33,26 +28,18 @@ public class PlayerController : MonoBehaviour
         Vector3 worldPosition = GetMouseWorldPosition(transform.position.z);
         playerDirection = worldPosition - transform.position;
 
-        //Move1();
-        if (input.SpacePressed)
+        Move1();
+
+        /*if (input.SpacePressed)
         {
             Move2();
         }
         else
         {
             rb.linearVelocity = Vector2.zero;
-        }
+        }*/
 
         Rotate();
-
-        if (input.ShootPressed)
-        {
-            Shoot();
-        }
-        else
-        {
-            shootTimer = 0f;//マウスの左クリックを一瞬押したときに、弾が出ない場合を防ぐため
-        }
     }
 
     private Vector3 GetMouseWorldPosition(float targetZ)//カーソルの位置を求める
@@ -88,38 +75,9 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = playerDirection * moveSpeed;
     }
 
-    private void Shoot()
-    {
-        /*Vector3 worldPosition = GetMouseWorldPosition(shootPoint.position.z);
-
-        Vector2 shootDirection = worldPosition - shootPoint.position;
-
-        if (shootDirection.sqrMagnitude < 0.0001f)
-            return;
-
-        shootDirection.Normalize();*/
-
-        if (shootTimer <= 0f)
-        {
-            GameObject tama = Instantiate(
-                tamaPrefab,
-                shootPoint.position,
-                Quaternion.identity
-            );
-
-            TamaController tamaController = tama.GetComponent<TamaController>();
-
-            tamaController.SetDirection(playerDirection);
-
-            shootTimer = shootInterval;
-        }
-
-        shootTimer -= Time.deltaTime;
-    }
-
     private void Rotate()//カーソルの位置に合わせてplayerを回転させる
     {
-        if (playerDirection.sqrMagnitude < 0.0001f)
+        if (playerDirection.sqrMagnitude < 0.0001f)//近すぎるときはreturn
             return;
 
         float angle = Mathf.Atan2(playerDirection.y, playerDirection.x) * Mathf.Rad2Deg;

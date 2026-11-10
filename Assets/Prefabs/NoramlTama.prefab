@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5113602561226773851}
   - component: {fileID: -4847641430772395206}
   m_Layer: 8
-  m_Name: Tama
+  m_Name: NoramlTama
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDate
   weaponName: Pistol
-  damage: 0
-  speed: 0
-  amount: 0
-  duration: 0
-  interval: 0
+  damage: 1
+  speed: 10
+  amount: 1
+  duration: 5
+  interval: 0.5
   tamaType: 0
   knockbackValue: 0
-  attenuationValue: 0
+  attenuationValue: 0.5
+  tamaPrefab: {fileID: 5509352104267636885, guid: a090c1fccd726dc46a0193f294c48e01, type: 3}

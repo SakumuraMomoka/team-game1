@@ -660,7 +660,8 @@ Transform:
   m_LocalPosition: {x: -2.7, y: -6.93, z: 0}
   m_LocalScale: {x: 1.3808513, y: 2.7629073, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 779700314}
   m_Father: {fileID: 1938799103}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &680640645
@@ -769,9 +770,9 @@ GameObject:
   m_Component:
   - component: {fileID: 717905122}
   - component: {fileID: 717905121}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Enemy1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -876,11 +877,11 @@ Transform:
   m_GameObject: {fileID: 779700313}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.73, y: -8.99, z: 0}
-  m_LocalScale: {x: 0.76499283, y: 0.7893037, z: 1}
+  m_LocalPosition: {x: -0.02172571, y: -0.7455914, z: 0}
+  m_LocalScale: {x: 0.5540009, y: 0.2856787, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1938799103}
+  m_Father: {fileID: 680640644}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &779700315
 SpriteRenderer:
@@ -1355,6 +1356,82 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1562563015}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1289560791
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1289560794}
+  - component: {fileID: 1289560793}
+  - component: {fileID: 1289560792}
+  - component: {fileID: 1289560795}
+  m_Layer: 0
+  m_Name: WeaponManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1289560792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289560791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5a19894dce53af4c92c4b8311a232fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
+  weaponDates:
+  - {fileID: 11400000, guid: 790c5be9046cee24bb4c617ab3d70236, type: 2}
+  - {fileID: 11400000, guid: 9b867b281c741be43b214fb9507ca163, type: 2}
+--- !u!114 &1289560793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289560791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdb68997a0708a4483542a265bc206a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  shootPoint: {fileID: 779700314}
+  weaponDate: {fileID: 11400000, guid: 790c5be9046cee24bb4c617ab3d70236, type: 2}
+  playerTrans: {fileID: 1938799103}
+--- !u!4 &1289560794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289560791}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.92472, y: 1.39444, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1289560795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289560791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 836d8386076b44a4cb4051e97eca1752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Input
 --- !u!1 &1313370086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1993,8 +2070,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
-  shootInterval: 0.3
-  shootPoint: {fileID: 779700314}
   tamaPrefab: {fileID: 5509352104267636885, guid: a090c1fccd726dc46a0193f294c48e01, type: 3}
 --- !u!212 &1938799102
 SpriteRenderer:
@@ -2068,7 +2143,6 @@ Transform:
   m_LocalScale: {x: 0.13571467, y: 0.13967109, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 779700314}
   - {fileID: 680640644}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2144,3 +2218,4 @@ SceneRoots:
   - {fileID: 1938799103}
   - {fileID: 1562563015}
   - {fileID: 717905122}
+  - {fileID: 1289560794}

@@ -2,17 +2,13 @@ using UnityEngine;
 
 public class TamaController : MonoBehaviour
 {
-    private Transform cameraTrans;
-
-    [SerializeField] private float speed;
-    public int damage;
-
+    private float speed;
+    private float damage;
     private Vector2 direction;
+    private float duration;
+    private float attenuationValue;
 
-    private void Awake()
-    {
-        cameraTrans = Camera.main.transform;
-    }
+    private Rigidbody2D rb;
 
     public void SetDirection(Vector2 direction)//弾の進む向きを変更する関数
     {
@@ -21,9 +17,20 @@ public class TamaController : MonoBehaviour
 
     private void Update()
     {
-        transform.position += (Vector3)(direction * speed * Time.deltaTime);
-
         destroy();
+    }
+
+    public void Initialize
+        (float damage, float speed, float duration, float attenuationValue)//weaponのデータをゲットする
+    {
+        this.damage = damage;
+        this.speed = speed;
+        this.duration = duration;
+        this.attenuationValue = attenuationValue;
+
+        rb = GetComponent<Rigidbody2D>();
+
+        rb.linearVelocity = direction * speed;
     }
 
     private void OnCollisionEnter2D(Collision2D other)//collision
@@ -39,12 +46,8 @@ public class TamaController : MonoBehaviour
         }
     }
 
-    private void destroy()//画面外にいったら、球を削除する
+    private void destroy()//指定距離進んだら、球を削除する
     {
-        if (this.transform.position.x > cameraTrans.transform.position.x + 10 ||
-            this.transform.position.x < cameraTrans.transform.position.x - 10)
-        {
-            Destroy(this.gameObject);
-        }
+
     }
 }
