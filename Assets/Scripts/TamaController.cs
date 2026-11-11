@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class TamaController : MonoBehaviour
 {
-    private float speed;
+    private float speed;//
     private float damage;
     private Vector2 direction;
-    private float duration;
-    private float attenuationValue;
+    private float duration;//
+    private float attenuationValue;//これの計算式はどうする？
+    private float timer;
 
     private Rigidbody2D rb;
 
@@ -38,6 +39,7 @@ public class TamaController : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))//敵とぶつかったとき
         {
             Destroy(this.gameObject);
+            //Enemycsで、TakeDamageをつくって、ここでダメージを食らわせる
         }
 
         if (other.gameObject.CompareTag("Ground"))//壁や地面にぶつかったとき
@@ -48,6 +50,11 @@ public class TamaController : MonoBehaviour
 
     private void destroy()//指定距離進んだら、球を削除する
     {
+        timer += Time.deltaTime;
 
+        if (timer >= duration)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

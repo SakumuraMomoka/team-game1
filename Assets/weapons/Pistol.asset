@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDate
   weaponName: Pistol
   damage: 1
-  speed: 10
+  speed: 7
   amount: 1
-  duration: 5
+  duration: 1
   interval: 0.5
   tamaType: 0
   knockbackValue: 0
