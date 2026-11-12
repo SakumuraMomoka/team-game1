@@ -17,7 +17,7 @@ MonoBehaviour:
   speed: 7
   amount: 1
   duration: 1
-  interval: 0.5
+  interval: 0.1
   tamaType: 0
   knockbackValue: 0
   attenuationValue: 0.5

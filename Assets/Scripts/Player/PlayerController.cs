@@ -7,12 +7,11 @@ public class PlayerController : MonoBehaviour
 {
     [Header("パラメーター")]
     public float moveSpeed;
-    private Vector2 playerDirection;
+    public Vector2 playerDirection;
 
     [Header("参照")]
     private Input input;
     private Rigidbody2D rb;
-    [SerializeField] private GameObject tamaPrefab;
     private Camera mainCamera;
 
     private void Awake()

@@ -21,4 +21,4 @@ MonoBehaviour:
   tamaType: 0
   knockbackValue: 0
   attenuationValue: 2
-  tamaPrefab: {fileID: 0}
+  tamaPrefab: {fileID: 5509352104267636885, guid: a090c1fccd726dc46a0193f294c48e01, type: 3}

@@ -18,7 +18,7 @@ public class TamaController : MonoBehaviour
 
     private void Update()
     {
-        destroy();
+        Destroy();
     }
 
     public void Initialize
@@ -52,7 +52,7 @@ public class TamaController : MonoBehaviour
         }
     }
 
-    private void destroy()//指定距離進んだら、球を削除する
+    private void Destroy()//指定距離進んだら、球を削除する
     {
         timer += Time.deltaTime;
 
