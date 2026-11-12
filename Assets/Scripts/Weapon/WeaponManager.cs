@@ -31,10 +31,8 @@ public class WeaponManager : MonoBehaviour
             ChangeWeapon(1);
         }
 
-        if (input.ShootPressed)//•Ší‚Ìí—Ş‚É‚æ‚Á‚ÄUŒ‚•û–@‚ª•Ï‚í‚é‚æ‚¤‚É’²®‚·‚é
-        {
-            weapon.NormalShoot();
-        }
+        //•Ší‚Ìí—Ş‚É‚æ‚Á‚ÄUŒ‚•û–@‚ª•Ï‚í‚é‚æ‚¤‚É’²®‚·‚é
+        weapon.ContinuousShoot();
     }
 
     public void ChangeWeapon(int index)

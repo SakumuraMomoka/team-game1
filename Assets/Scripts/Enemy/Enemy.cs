@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    int MaxHp;
-    int CurrentHp;
+    [SerializeField] private float MaxHp;
+    private float CurrentHp;
 
-    public void Start()
+    private void Start()
     {
-        
+        CurrentHp = MaxHp;
     }
 
     public void TakeDamage(float damage)
     {
-
+        CurrentHp -= damage;
+        Debug.Log("受けたダメージ："+ damage + "敵現在HP：" + CurrentHp);
     }
 
 }

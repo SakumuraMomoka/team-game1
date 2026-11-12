@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class TamaController : MonoBehaviour
 {
-    private float speed;//
+    private float speed;
     private float damage;
     private Vector2 direction;
-    private float duration;//
-    private float attenuationValue;//これの計算式はどうする？
+    private float duration;
+    private float attenuationValue;
     private float timer;
 
     private Rigidbody2D rb;
@@ -22,7 +22,7 @@ public class TamaController : MonoBehaviour
     }
 
     public void Initialize
-        (float damage, float speed, float duration, float attenuationValue)//weaponのデータをゲットする
+        (float damage, float speed, float duration, float attenuationValue)//weaponのデータをゲットし、発射
     {
         this.damage = damage;
         this.speed = speed;
@@ -38,8 +38,12 @@ public class TamaController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))//敵とぶつかったとき
         {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage - attenuationValue * timer);
+            }
             Destroy(this.gameObject);
-            //Enemycsで、TakeDamageをつくって、ここでダメージを食らわせる
         }
 
         if (other.gameObject.CompareTag("Ground"))//壁や地面にぶつかったとき

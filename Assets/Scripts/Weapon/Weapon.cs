@@ -9,14 +9,14 @@ public class Weapon : MonoBehaviour //武器の攻撃のプログラミングをまとめる
     [SerializeField] private Transform shootPoint;
     private Vector2 playerDirection;
     [Header("参照")]
-    private PlayerInput input;
+    private Input input;
     private Camera mainCamera;
     public WeaponDate weaponDate;
     [SerializeField] private Transform playerTrans;
 
     private void Awake()
     {
-        input = GetComponent<PlayerInput>();
+        input = GetComponent<Input>();
         mainCamera = Camera.main;
     }
 
@@ -36,31 +36,39 @@ public class Weapon : MonoBehaviour //武器の攻撃のプログラミングをまとめる
         weaponDate = newDate;
     }
 
-    public void NormalShoot()//武器ごとに攻撃方法のプログラミングを作る必要がある。いったんこれだけ
+    public void OnetimeShoot()//単発発射
+    {
+        if (weaponDate == null) return;
+    }
+
+    public void ContinuousShoot()//連続発射
     {
         if (weaponDate == null) return;
 
-        // プレイヤーからカーソルへの方向を取得
-        Vector3 worldPosition = GetMouseWorldPosition(transform.position.z);
-        playerDirection = worldPosition - playerTrans.position;
-
-        if (shootTimer <= 0f)
+        if (input.ShootPressed)
         {
-            GameObject tama = Instantiate(
-                weaponDate.tamaPrefab,
-                shootPoint.position,
-                Quaternion.identity
-            );
+                // プレイヤーからカーソルへの方向を取得
+                Vector3 worldPosition = GetMouseWorldPosition(transform.position.z);
+                playerDirection = worldPosition - playerTrans.position;
 
-            TamaController tamaController = tama.GetComponent<TamaController>();
-            tamaController.SetDirection(playerDirection);
-            tamaController.Initialize(
-                weaponDate.damage,
-                weaponDate.speed,
-                weaponDate.duration,
-                weaponDate.attenuationValue);
+                if (shootTimer <= 0f)
+                {
+                    GameObject tama = Instantiate(
+                        weaponDate.tamaPrefab,
+                        shootPoint.position,
+                        Quaternion.identity
+                    );
 
-            shootTimer = weaponDate.interval;
+                    TamaController tamaController = tama.GetComponent<TamaController>();
+                    tamaController.SetDirection(playerDirection);
+                    tamaController.Initialize(
+                        weaponDate.damage,
+                        weaponDate.speed,
+                        weaponDate.duration,
+                        weaponDate.attenuationValue);
+
+                    shootTimer = weaponDate.interval;
+                }
         }
 
         shootTimer -= Time.deltaTime;
