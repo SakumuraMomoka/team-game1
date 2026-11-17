@@ -1,4 +1,5 @@
 using Unity.Burst.Intrinsics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -38,7 +39,14 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
         }*/
 
-        Rotate();
+        if (input.ShootPressed)
+        {
+            CursorRotate();
+        }
+        else
+        {
+            WASDRotate();
+        }
     }
 
     private Vector3 GetMouseWorldPosition(float targetZ)//カーソルの位置を求める
@@ -74,7 +82,19 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = playerDirection * moveSpeed;
     }
 
-    private void Rotate()//カーソルの位置に合わせてplayerを回転させる
+    private void WASDRotate()//WASDでプレイヤーを回転させる
+    {
+        Vector2 walk = input.MoveInput.normalized;
+
+        if (walk != Vector2.zero)
+        {
+            float angle = Mathf.Atan2(walk.y, walk.x) * Mathf.Rad2Deg;
+
+            transform.rotation = Quaternion.Euler(0, 0, angle + 90);
+        }
+    }
+
+    private void CursorRotate()//カーソルの位置に合わせてplayerを回転させる
     {
         if (playerDirection.sqrMagnitude < 0.0001f)//近すぎるときはreturn
             return;

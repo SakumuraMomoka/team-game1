@@ -38,7 +38,7 @@ public class TamaController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))//“G‚Æ‚Ô‚Â‚©‚Á‚½‚Æ‚«
         {
-            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            EnemyDateController enemy = other.gameObject.GetComponent<EnemyDateController>();
             if (enemy != null)
             {
                 enemy.TakeDamage(damage - attenuationValue * timer);
