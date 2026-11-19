@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.AdaptivePerformance;
+using Pathfinding;
 using static State;
-using static UnityEngine.GraphicsBuffer;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -15,6 +14,10 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private LayerMask obstacleLayer;
 
+    private Vector2 lastPlayerPosition;
+    private bool reachedLastPosition = false;
+    [SerializeField] private float arrivalDistance;
+
     private float lostTimer = 0;
     [SerializeField] private float lostTime;
 
@@ -23,12 +26,20 @@ public class EnemyAI : MonoBehaviour
     [Header("参照")]
     EnemyDateController enemy;
     private Transform player;
-    private Rigidbody2D rb;
+
+    [SerializeField] private WeaponDate weaponDate;
+    private Weapon weapon;
+
+    private AIPath aiPath;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         enemy = GetComponent<EnemyDateController>();
+        weapon = GetComponent<Weapon>();
+        aiPath = GetComponent<AIPath>();
+
+        aiPath.maxSpeed = enemy.moveSpeed;
+        aiPath.isStopped = true;
     }
 
     void Update()
@@ -61,15 +72,6 @@ public class EnemyAI : MonoBehaviour
             case EnemyState.Dead:
                 Dead();
                 break;
-        }
-    }
-
-    void FixedUpdate()
-    {
-        if (currentState != EnemyState.Chase &&
-            currentState != EnemyState.Lost)
-        {
-            rb.linearVelocity = Vector2.zero;
         }
     }
 
@@ -148,6 +150,25 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, viewDistance);
     }
 
+    private void RotateToMovement()
+    {
+        Vector2 direction = aiPath.desiredVelocity;
+
+        if (direction.sqrMagnitude < 0.01f) return;
+
+        float targetAngle =
+            Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
+
+        Quaternion targetRotation =
+            Quaternion.Euler(0f, 0f, targetAngle);
+
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            targetRotation,
+            360f * Time.deltaTime
+        );
+    }
+
     private void Idle()//何もない間の動き
     {
         SearchPlayer();
@@ -157,7 +178,7 @@ public class EnemyAI : MonoBehaviour
     {
         float fromPlayerDistance = Vector2.Distance(transform.position, player.position);//enemyとplayerの距離
 
-        if (attackDistance < fromPlayerDistance)//距離がある場合移動する
+        if (attackDistance > fromPlayerDistance)//距離内の時攻撃し、距離がある場合移動する
 
         {
             ChangeState(EnemyState.Attack);
@@ -166,57 +187,46 @@ public class EnemyAI : MonoBehaviour
         {
             ChangeState(EnemyState.Chase);
         }
-       
-        //視界から外れたら、外れた瞬間のplayerの位置へ移動し、索敵する
     }
 
     private void Lost()
     {
-        if (player == null)
+        // Playerを再発見した場合
+        if (CanSeePlayer(player))
         {
-            Debug.Log("player == null");
+            lostTimer = 0;
+            reachedLastPosition = false;
+
+            ChangeState(EnemyState.Find);
             return;
         }
 
-        if (!CanSeePlayer(playerTrans.transform)) //10秒間視界に入らなかったら、見失う＞ これまだやってない>元の場所に戻る
+        // 最後に見た位置を目的地に設定
+        aiPath.destination = lastPlayerPosition;
+
+        aiPath.isStopped = false;
+
+        RotateToMovement();
+
+        // 経路計算が完了し、目的地に到着したか確認
+        if (!aiPath.pathPending && aiPath.reachedDestination)
         {
-            Debug.Log(player.transform);
+            aiPath.isStopped = true;
+
+            if (!reachedLastPosition)
+            {
+                reachedLastPosition = true;
+                lostTimer = 0;
+
+                Debug.Log("最後に見た位置に到着！索敵開始");
+            }
 
             lostTimer += Time.deltaTime;
 
-            // まだ最後に見た位置に到着していない場合
-            if (this.transform.position != player.transform.position)
-            {
-                Vector2 direction =
-           ((Vector2)player.position - rb.position).normalized;
-
-                float targetAngle =
-                Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
-
-                Quaternion targetRotation =
-                    Quaternion.Euler(0f, 0f, targetAngle);
-
-                transform.rotation = Quaternion.RotateTowards(
-                    transform.rotation,
-                    targetRotation,
-                    360f * Time.deltaTime
-                );
-
-                rb.linearVelocity = direction * enemy.moveSpeed;
-            }
-
-            if (lostTimer > lostTime)
+            if (lostTimer >= lostTime)
             {
                 ChangeState(EnemyState.Idle);
-
-                lostTimer = 0;
             }
-        }
-        else if (CanSeePlayer(playerTrans.transform))
-        {
-            ChangeState(EnemyState.Find);
-            lostTimer = 0;
-            player = playerTrans;
         }
     }
 
@@ -224,11 +234,42 @@ public class EnemyAI : MonoBehaviour
     {
         if (player == null) return;
 
+        // Playerの位置を記憶
+        lastPlayerPosition = player.position;
+
+        // Playerを目的地にする
+        aiPath.destination = player.position;
+
+        // 移動開始
+        aiPath.isStopped = false;
+
+        RotateToMovement();
+
+        float fromPlayerDistance = Vector2.Distance(transform.position, player.position);//enemyとplayerの距離
+
+        if (attackDistance > fromPlayerDistance)//距離が一定以内になったら攻撃する
+
+        {
+            ChangeState(EnemyState.Attack);
+        }
+    }
+
+    private void Attack()
+    {
+        if (player == null) return;
+
+        RotateToMovement();
+
+        // 敵からPlayerに向かう方向
         Vector2 direction =
-            ((Vector2)player.position - rb.position).normalized;
+            ((Vector2)player.position -
+            (Vector2)transform.position).normalized;
+
+        //playerの方向へ回転
+        if (direction.sqrMagnitude < 0.01f) return;
 
         float targetAngle =
-        Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
+            Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
 
         Quaternion targetRotation =
             Quaternion.Euler(0f, 0f, targetAngle);
@@ -239,11 +280,16 @@ public class EnemyAI : MonoBehaviour
             360f * Time.deltaTime
         );
 
-        rb.linearVelocity = direction * enemy.moveSpeed;
-    }
+        // Playerに向かって発射
+        weapon.TryShoot(direction);
 
-    private void Attack()
-    {
+        float fromPlayerDistance = Vector2.Distance(transform.position, player.position);//enemyとplayerの距離
+
+        if (attackDistance < fromPlayerDistance)//距離がある場合移動する
+
+        {
+            ChangeState(EnemyState.Chase);
+        }
     }
 
     private void Dead()
@@ -260,44 +306,42 @@ public class EnemyAI : MonoBehaviour
         {
             case EnemyState.Idle:
                 Debug.Log("待機開始");
+                aiPath.isStopped = true;
                 break;
 
             case EnemyState.Find:
                 Debug.Log("見つけた！");
-
-                //playerを向く
-                Vector2 direction =
-               ((Vector2)player.position - rb.position).normalized;
-
-                float targetAngle =
-                Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
-
-                Quaternion targetRotation =
-                    Quaternion.Euler(0f, 0f, targetAngle);
-
-                transform.rotation = Quaternion.RotateTowards(
-                    transform.rotation,
-                    targetRotation,
-                    360f * Time.deltaTime
-                );
-                break;
-
-            case EnemyState.Lost:
-                Debug.Log("見失った");
-                lostTimer = 0;
-
+                aiPath.isStopped = true;
                 break;
 
             case EnemyState.Chase:
                 Debug.Log("追跡開始！");
+                aiPath.isStopped = false;
+                break;
+
+            case EnemyState.Lost:
+                Debug.Log("見失った");
+
+                // 見失った瞬間の位置を保存
+                if (player != null)
+                {
+                    lastPlayerPosition = player.position;
+                }
+
+                lostTimer = 0;
+                reachedLastPosition = false;
+
+                aiPath.isStopped = false;
                 break;
 
             case EnemyState.Attack:
                 Debug.Log("攻撃開始！");
+                aiPath.isStopped = true;
                 break;
 
             case EnemyState.Dead:
                 Debug.Log("死亡");
+                aiPath.isStopped = true;
                 break;
         }
     }

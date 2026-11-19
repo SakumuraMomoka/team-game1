@@ -7,11 +7,13 @@ public class WeaponManager : MonoBehaviour
     public WeaponDate[] weaponDates;
     Weapon weapon;
     private Input input;
+    private PlayerController playerController;
 
     private void Awake()
     {
         input = GetComponent<Input>();
         weapon = GetComponent<Weapon>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Start()
@@ -31,8 +33,11 @@ public class WeaponManager : MonoBehaviour
             ChangeWeapon(1);
         }
 
-        //•Ší‚Ìí—Ş‚É‚æ‚Á‚ÄUŒ‚•û–@‚ª•Ï‚í‚é‚æ‚¤‚É’²®‚·‚é
-        weapon.ContinuousShoot();
+        if (input.ShootPressed)
+        {
+            //•Ší‚Ìí—Ş‚É‚æ‚Á‚ÄUŒ‚•û–@‚ª•Ï‚í‚é‚æ‚¤‚É’²®‚·‚é
+            weapon.TryShoot(playerController.playerDirection);
+        }
     }
 
     public void ChangeWeapon(int index)
