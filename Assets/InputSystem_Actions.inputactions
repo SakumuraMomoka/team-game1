@@ -25,9 +25,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Space",
+                    "name": "Avoid",
                     "type": "Button",
                     "id": "b05968c1-bb4d-48f0-ac66-ee17a21b1b7f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "62e0f438-384c-477f-ba88-30183217bcbb",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -185,7 +194,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Space",
+                    "action": "Avoid",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b423d067-090d-4072-a6da-906d97313266",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

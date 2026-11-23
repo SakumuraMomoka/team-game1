@@ -1,22 +1,27 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("パラメーター")]
-    public float moveSpeed;
     public Vector2 playerDirection;
+    [SerializeField] private float avoidDuration;
+    [SerializeField] private float avoidSpeed;
+    private bool isAvoiding = true;
 
     [Header("参照")]
     private Input input;
     private Rigidbody2D rb;
     private Camera mainCamera;
+    private PlayerDateController playerDateController;
 
     private void Awake()
     {
         input = GetComponent<Input>();
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
+        playerDateController = GetComponent<PlayerDateController>();
     }
 
     private void Update()
@@ -44,6 +49,18 @@ public class PlayerController : MonoBehaviour
         {
             WASDRotate();
         }
+
+        if (input.AvoidPressed)
+        {
+            Vector2 direction = input.MoveInput;
+
+            if (direction == Vector2.zero)
+            {
+                direction = -transform.up;
+            }
+
+            StartCoroutine(AvoidCoroutine(direction.normalized));
+        }
     }
 
     private Vector3 GetMouseWorldPosition(float targetZ)//カーソルの位置を求める
@@ -61,7 +78,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 walk = input.MoveInput.normalized;//移動入力の値を取得
 
-        rb.linearVelocity = walk * moveSpeed;
+        rb.linearVelocity = walk * playerDateController.currentSpeed;
     }
 
     private void Move2()//カーソルの方向に進む移動
@@ -76,7 +93,7 @@ public class PlayerController : MonoBehaviour
         playerDirection.Normalize();//ベクトルの大きさを１にする
 
         // カーソルの方向に移動
-        rb.linearVelocity = playerDirection * moveSpeed;
+        rb.linearVelocity = playerDirection * playerDateController.currentSpeed;
     }
 
     private void WASDRotate()//WASDでプレイヤーを回転させる
@@ -99,5 +116,25 @@ public class PlayerController : MonoBehaviour
         float angle = Mathf.Atan2(playerDirection.y, playerDirection.x) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(0f, 0f, angle + 90);
+    }
+
+    private IEnumerator AvoidCoroutine(Vector2 direction)
+    {
+        isAvoiding = true;
+
+        float timer = 0f;
+
+        while (timer < avoidDuration)
+        {
+            rb.linearVelocity = direction * avoidSpeed;
+
+            timer += Time.deltaTime;
+
+            yield return null;
+        }
+
+        rb.linearVelocity = Vector2.zero;
+
+        isAvoiding = false;
     }
 }
