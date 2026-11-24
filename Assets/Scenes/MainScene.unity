@@ -389,7 +389,7 @@ Transform:
   m_GameObject: {fileID: 465497230}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.1253, y: -1.5369, z: 0}
+  m_LocalPosition: {x: -13.07, y: -2.31, z: 0}
   m_LocalScale: {x: 1.6131214, y: 0.4986543, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -641,7 +641,7 @@ GameObject:
   - component: {fileID: 680640644}
   - component: {fileID: 680640645}
   - component: {fileID: 680640646}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -657,7 +657,7 @@ Transform:
   m_GameObject: {fileID: 680640643}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.26, y: -1.97, z: 0}
+  m_LocalPosition: {x: -2.55, y: -2.06, z: 0}
   m_LocalScale: {x: 1.3808513, y: 2.7629073, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -918,8 +918,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 7.2099996, y: 7.4099994}
+  m_Offset: {x: -0.016655587, y: -0.13233636}
+  m_Size: {x: 7.5763245, y: 8.005509}
   m_Direction: 0
 --- !u!50 &717905125
 Rigidbody2D:
@@ -1056,7 +1056,7 @@ GameObject:
   m_Component:
   - component: {fileID: 779700314}
   - component: {fileID: 779700315}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1423,7 +1423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 968189605}
   - component: {fileID: 968189606}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: EnemyShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2004,7 +2004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: AstarPathfindingProject::AstarPath
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAABIIezmue0DbQIAACQFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMly2zAM/RUPz7VHXuKlt1Z2nB6SeOJ2ctGFpiCLY4rUcIntZPzvBam17kkUgAe89wjpi3BpSmBW6a3m6bNKgXwfEH8m3wZd8gku9Kjknn9CU/POU5v7Ihpq3qjlCuNjDzOqAKs5+yGPwhdHGHSSZ0oXm/QIsTLWYDijwgCmtLIeLTH0NSAXfAxXHnLF02ThT594WkWDGx4ZSAu6V7ocRePJNJrWgOF0NJ8sl6tlDatQTjJBixJSL6EDT9sxVZlEcXVFNPJSmBKCm5obsdcyaI9paRwqw4KUU9QaCM3xNQd+zK1v2Ae/ZpkBWxuh6XXNNVpWdSU/VeVjQc2pYvZBhfNz5rNAqur5/F96OA7pTKviqRk7jvwIm3N2eqNXRo3t+dwPrzve4+DPmYoTPQh4z0G+qK1WTqaYtNp5qDMwWXevrbI4B3bq4hXVu6ArO8Mbv5tL9RpuQfwlFrw4BONnVWAvVLA77AJovJpfSDhsiqlbYNSz+GPgNz32V6pOPHJtLKZqldLTOyinfSnZBM+8GmdjpSWEcE26BEmFve6wjb2/wbtcb+xd5pH6j6ceXueab+IOEsJdfRTdpXbq3F6WydX5GUz+6qzgEjrSPvGCPsVKymrB+p40sL3TGWU92NHx9N/VItESJgzmC4AHmD4wNjzMosNsNV1kC5qtJtmChN3jEnVSsauI1vbgrcmuucQ9a/4pg62mZVj2VNPzln8Wqmc5l5naMw0gX6sOLXHQOAQ/y3STcjRoD9ZyGe6bfCVEKHaCNGkbJUHp5mI1TbouCSn5h7I+kpA4/EQS4sPtLu80fHA4++Et7kZufwFQSwMEFAAACAgAAEgh7EAmoZRtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJKBRapRcqqZeWqqaaqxaXKybpKJQZKJpbF5mnlimqVRmrlSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAEgh7Oa57QNtAgAAJAUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAEgh7EAmoZRtAAAAeAAAAAkAJAAAAAAAAAAAAAAAugIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAAByAwAAAAA=
+    dataString: UEsDBBQAAAgIAABIIezpvdp+bAIAACQFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMty2jAU/RVG68IYQ3h01xpCukjChHay8UbI11iDLHn0CJAM/94r2cYuXVk+93XO0bW/CJemAmaV3miePasMyPcB8WfybdAFn+BMD0ru+Ce0Oe88s4VPoiHnjVquEB/7MqNKsJqzH/IgfHKEoJM8V7pcZwdIlLEG4ZwKAxjSyvpqidDXgJzxMVz6kgue4rk/feJpGQ2ueGQgLehe6mIUjeNJNGkKhpPRLF4sloumrK5ykglaVpB5CV3x5DamTpMorsmIRl4KU0Jw03Aj9lIF7QmtjENlmJBxiloDoXGM7wXwQ2F9x371a54bsI0Tml5WXKNndVvyU9VGltQca2ofVDg/aDYNrOqez/+Fh+MQzrUqn9qx48iPsAVnxzd6YdTYntF9eNUjHgw6UXGkewHvBcgXtdHKyQyDVjtf6gzEq+71piwpgB07vKZ6B7qqc7w1vL1Vr+EaxJ8Twct9cH5aAzuhgt9hGUDj3fxCwmFVTNMCUc/ij4Hf9NDfqSbwyLWxGGpUSk9vr5z2qWQdPPNqnE2UlhDghnQFkgp72WIbe3+Dd7He2LvII/VfTzO8ibUfxV1JgLv8KLoLbdXpdlmmUKdnMMWrs4JL6Ej7wAv6lCgp6wXre9KW7ZzOKeuVHRzP/l0tEi0gZjCbAzzA5IGx4X4a7afLyTyf03wZ53MSdo9L1EnFtiba2IO3JrvmEves/akMNppWYdkzTU8b/lmqnuVc5mrHNIB8rTvciIPGIfhdZuuMo0E7sJbLcN/kKyVCsSNk6a1RGpSuz1bTtOuSkop/KOuRlCThL5ISD992eavhg8PJD2+bXcn1L1BLAwQUAAAICAAASCHsQCahlG0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0koFFqlFyqpl5aqppqrFpcrJukolBkomlsXmaeWKapVGauVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAASCHs6b3afmwCAAAkBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAASCHsQCahlG0AAAB4AAAACQAkAAAAAAAAAAAAAAC5AgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAHEDAAAAAA==
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -2364,7 +2364,7 @@ GameObject:
   - component: {fileID: 1885477342}
   - component: {fileID: 1885477344}
   - component: {fileID: 1885477343}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: EnemyGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2380,7 +2380,7 @@ Transform:
   m_GameObject: {fileID: 1885477341}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.83, y: -1.51, z: 0}
+  m_LocalPosition: {x: -2.19, y: -2.12, z: 0}
   m_LocalScale: {x: 1.2493451, y: 2.572655, z: 6.666666}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2502,7 +2502,7 @@ GameObject:
   - component: {fileID: 1938799108}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2670,8 +2670,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -3.705}
-  m_Radius: 3.705
+  m_Offset: {x: 0, y: -0.054023135}
+  m_Radius: 3.8527277
 --- !u!114 &1938799106
 MonoBehaviour:
   m_ObjectHideFlags: 0

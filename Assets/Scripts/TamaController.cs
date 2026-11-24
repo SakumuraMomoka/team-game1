@@ -46,6 +46,16 @@ public class TamaController : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        if (other.gameObject.CompareTag("Player"))//player‚Æ‚Ô‚Â‚©‚Á‚½‚Æ‚«
+        {
+            PlayerDateController player = other.gameObject.GetComponent<PlayerDateController>();
+            if (player != null)
+            {
+                player.TakeDamage(damage - attenuationValue * timer);
+            }
+            Destroy(this.gameObject);
+        }
+
         if (other.gameObject.CompareTag("Ground"))//•Ç‚â’n–Ê‚É‚Ô‚Â‚©‚Á‚½‚Æ‚«
         {
             Destroy(this.gameObject);

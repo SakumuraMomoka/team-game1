@@ -29,6 +29,8 @@ public class PlayerDateController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHp -= damage;
+
+        Debug.Log("Playeråªç›HP : " + currentHp);
     }
 
     public void AddHp(float recovery)

@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 playerDirection;
     [SerializeField] private float avoidDuration;
     [SerializeField] private float avoidSpeed;
-    private bool isAvoiding = true;
+    private bool isAvoiding;
 
     [Header("éQè∆")]
     private Input input;
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
             WASDRotate();
         }
 
-        if (input.AvoidPressed)
+        if (input.AvoidPressed && isAvoiding != true)
         {
             Vector2 direction = input.MoveInput;
 
