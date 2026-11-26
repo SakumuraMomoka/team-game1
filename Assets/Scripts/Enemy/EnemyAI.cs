@@ -26,6 +26,7 @@ public class EnemyAI : MonoBehaviour
     [Header("QÆ")]
     EnemyDateController enemy;
     private Transform player;
+    [SerializeField] Transform currentPlayerTrans;
 
     [SerializeField] private WeaponDate weaponDate;
     private Weapon weapon;
@@ -52,7 +53,7 @@ public class EnemyAI : MonoBehaviour
 
             case EnemyState.Find:
                 Find();
-                if (!CanSeePlayer(player.transform)) ChangeState(EnemyState.Lost);
+                if (!CanSeePlayer(player)) ChangeState(EnemyState.Lost);
                 break;
 
             case EnemyState.Lost:
@@ -61,12 +62,12 @@ public class EnemyAI : MonoBehaviour
 
             case EnemyState.Chase:
                 Chase();
-                if (!CanSeePlayer(player.transform)) ChangeState(EnemyState.Lost);
+                if (!CanSeePlayer(player)) ChangeState(EnemyState.Lost);
                 break;
 
             case EnemyState.Attack:
                 Attack();
-                if (!CanSeePlayer(player.transform)) ChangeState(EnemyState.Lost);
+                if (!CanSeePlayer(player)) ChangeState(EnemyState.Lost);
                 break;
 
             case EnemyState.Dead:
@@ -75,17 +76,46 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private bool CanSeePlayer(Transform target)
+    private void OnCollisionEnter2D(Collision2D other)//collision
     {
+        if (other.gameObject.CompareTag("Tama"))//“G‚Æ‚Ô‚Â‚©‚Á‚½‚Æ‚«
+        {
+            player = currentPlayerTrans;
+            ChangeState(EnemyState.Chase);
+        }
+    }
+
+    private bool CanSeePlayer(Transform target)//player‚ªŒ©‚¦‚½‚©”»’è
+    {
+        if (target == null) return false;
+
+        // Player‚Ö‚Ì•ûŒü
         Vector2 direction =
             ((Vector2)target.position -
             (Vector2)transform.position).normalized;
 
+        // Player‚Ü‚Å‚Ì‹——£
         float distance = Vector2.Distance(
             transform.position,
             target.position
         );
 
+        // ‡@ ‹ŠE‹——£‚Ì”»’è
+        if (distance > viewDistance)
+        {
+            return false;
+        }
+
+        // ‡A ‹–ìŠp‚Ì”»’è
+        // “G‚Ì³–Ê‚Í -transform.up
+        float angle = Vector2.Angle(-transform.up, direction);
+
+        if (angle > viewAngle / 2f)
+        {
+            return false;
+        }
+
+        // ‡B Õ•Á•¨‚Ì”»’è
         RaycastHit2D hit = Physics2D.Raycast(
             transform.position,
             direction,
@@ -93,39 +123,31 @@ public class EnemyAI : MonoBehaviour
             obstacleLayer
         );
 
-        // áŠQ•¨‚É“–‚½‚ç‚È‚¯‚ê‚Î”­Œ©‚Å‚«‚é
-        return hit.collider == null;
+        if (hit.collider != null)
+        {
+            return false;
+        }
+
+        return true;
     }
 
-    private void SearchPlayer()//player‚ğ’T‚·
+    private void SearchPlayer() // Player‚ğ’T‚·“®‚«
     {
         Collider2D[] targets = Physics2D.OverlapCircleAll(
             transform.position,
             viewDistance,
             playerLayer
-            );
+        );
 
         foreach (Collider2D target in targets)
         {
-            Vector2 direction =
-                ((Vector2)target.transform.position -
-                (Vector2)transform.position).normalized;
-
-            // “G‚Ì³–Ê‚ÆPlayer‚Ì•ûŒü‚ÌŠp“x‚ğ’²‚×‚é
-            float angle = Vector2.Angle(-transform.up, direction);
-
-            if (angle <= viewAngle / 2f)
+            if (CanSeePlayer(target.transform))
             {
-                if (CanSeePlayer(target.transform))
-                {
-                    player = target.transform;
-                    ChangeState(EnemyState.Find);
-                    return;
-                }
+                player = target.transform;
+                ChangeState(EnemyState.Find);
+                return;
             }
         }
-
-        currentState = EnemyState.Idle;
     }
 
     void OnDrawGizmosSelected()// Sceneƒrƒ…[‚É‹ŠE‚Ì”ÍˆÍ‚ğ•\¦

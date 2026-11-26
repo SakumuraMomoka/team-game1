@@ -6,8 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     [Header("パラメーター")]
     public Vector2 playerDirection;
-    [SerializeField] private float avoidDuration;
-    [SerializeField] private float avoidSpeed;
     private bool isAvoiding;
 
     [Header("参照")]
@@ -59,7 +57,10 @@ public class PlayerController : MonoBehaviour
                 direction = -transform.up;
             }
 
-            StartCoroutine(AvoidCoroutine(direction.normalized));
+            if (playerDateController.UseStamina(playerDateController.avoidStaminaCost))
+            {
+                StartCoroutine(AvoidCoroutine(direction.normalized));
+            }
         }
     }
 
@@ -124,9 +125,9 @@ public class PlayerController : MonoBehaviour
 
         float timer = 0f;
 
-        while (timer < avoidDuration)
+        while (timer < playerDateController.avoidDuration)
         {
-            rb.linearVelocity = direction * avoidSpeed;
+            rb.linearVelocity = direction * playerDateController.avoidSpeed;
 
             timer += Time.deltaTime;
 

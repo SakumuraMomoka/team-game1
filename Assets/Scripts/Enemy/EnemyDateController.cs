@@ -3,17 +3,19 @@ using UnityEngine;
 public class EnemyDateController : MonoBehaviour
 {
     public float moveSpeed = 3f;
-    [SerializeField] private float MaxHp;
-    private float CurrentHp;
+    [SerializeField] private float maxHp;
+    private float currentHp;
 
     private void Start()
     {
-        CurrentHp = MaxHp;
+        currentHp = maxHp;
     }
 
     public void TakeDamage(float damage)
     {
-        CurrentHp -= damage;
-        Debug.Log("受けたダメージ：" + damage + "敵現在HP：" + CurrentHp);
+        currentHp -= damage;
+        Mathf.Clamp(currentHp, 0, maxHp);
+
+        Debug.Log("受けたダメージ：" + damage + "敵現在HP：" + currentHp);
     }
 }

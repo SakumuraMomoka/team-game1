@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -4847641430772395206}
   m_Layer: 8
   m_Name: NoramlTama
-  m_TagString: Untagged
+  m_TagString: Tama
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,8 +106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9469341edb0ecf34b8afd82c635cfeca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TamaController
-  speed: 10
-  damage: 0
 --- !u!58 &-5113602561226773851
 CircleCollider2D:
   m_ObjectHideFlags: 0

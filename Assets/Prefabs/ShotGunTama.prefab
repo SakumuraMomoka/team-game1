@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3607201180608287324}
   m_Layer: 0
   m_Name: ShotGunTama
-  m_TagString: Untagged
+  m_TagString: Tama
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
